@@ -36,7 +36,7 @@ nnoremap <buffer> <localleader>r
     \ :silent !<C-r>=g:macvim_skim_app_path<CR>/Contents/SharedSupport/displayline
     \ -r <C-r>=line(".")<CR>
     \ %:h/<C-r>=g:macvim_skim_out_dir<CR>/%:t:r.pdf %<CR>
-    \ :silent !osascript -e "tell application \"MacVim\" to activate" <CR><CR>
+    \ :silent !osascript -e "tell application \"MacVim\" to activate" <CR>
 
 nnoremap <buffer> <localleader>t
     \ :w<CR>
@@ -44,6 +44,6 @@ nnoremap <buffer> <localleader>t
     \ :silent !<C-r>=g:macvim_skim_app_path<CR>/Contents/SharedSupport/displayline
     \ -r <C-r>=line(".")<CR>
     \ %:h/<C-r>=g:macvim_skim_out_dir<CR>/%:t:r.pdf %<CR>
-    \ :silent !osascript -e "tell application \"MacVim\" to activate" <CR><CR>
+    \ :silent !osascript -e "tell application \"MacVim\" to activate" <CR>
 
 
