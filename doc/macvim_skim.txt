@@ -1,0 +1,85 @@
+*macvim_skim.txt* Extra integration for jumping to and from TeX files.
+
+======================================================================
+CONTENTS                                        *MacVim_Skim_Contents*
+
+    1. Usage ................ |MacVim_Skim_Usage|
+    2. Installation ......... |MacVim_Skim_Installation|
+    3. Mappings ............. |MacVim_Skim_Mappings|
+    4. Variables ............ |MacVim_Skim_Variables|
+
+======================================================================
+Section 1. Usage                                *MacVim_Skim_Usage*
+
+This has tools for working with SyncTeX to jump from the current line
+in the Vim to the matching line in the PDF file, and back again.
+
+This plugin offers some key bindings under <LocalLeader> to
+compile and jump to the PDF.
+
+The main improvement when jumping back from the PDF is that it
+will attempt to only load the TeX source in the MacVim instance
+that already has the source open in a buffer.
+
+It is currently tied to Skim for jumping from Vim to the PDF.
+
+======================================================================
+Section 2. Installation                         *MacVim_Skim_Installation*
+This plugin requires some additional installation, namely a shell script
+`macvim-load-line` which is distributed with this plugin, which needs to
+be added to your path. It should be invoked as `macvim-load-line <file>
+<line>`.
+
+In addition, Skim needs to be told to use `macvim-load-line`, either
+through the Preferences window, or directly by running these: >
+
+    defaults write net.sourceforge.skim-app.skim SKTeXEditorCommand "macvim-load-line"
+    defaults write net.sourceforge.skim-app.skim SKTeXEditorArguments "'\"%file\" %line'"
+
+======================================================================
+Section 3. Mappings                             *MacVim_Skim_Mappings*
+All of these mappings save the current buffer first.
+
+<LocalLeader>v
+    The simplest of the commands, this jumps to the current line in the PDF
+
+<LocalLeader>p
+    This command first compiles the PDF using `pdftex`, then jumps to the
+    current line.
+    The precise command is configurable in |g:macvim_skim_app_path|.
+
+<LocalLeader>m
+    This command first compiles using `make`, then jumps to the current line.
+
+These next commands return focus to Vim afterwards, instead of leaving
+the focus on the PDF viewer.
+
+<LocalLeader>r
+    This jumps the to current line in the PDF, then refocuses Vim.
+
+<LocalLeader>t
+    This compiles the PDF using `pdftex`, then jumps to the current line
+    in the PDF viewer, and then returns focus to Vim.
+
+======================================================================
+Section 4. Variables                                *MacVim_Skim_Variables*
+
+                                                    *macvim_skim_app_path*
+'g:macvim_skim_app_path'    The path to 'Skim.app'.  If not set
+                            it defaults to '/Applications/Skim.app'
+
+                                                    *macvim_skim_out_dir*
+'g:macvim_skim_out_dir'     This will control where MacVim_Skim looks
+                            for the '.pdf' file associated with the '.tex'
+                            current buffer.  By default, it is set to '.',
+                            the current directory, but another common value
+                            it 'out/'.
+                                                    *macvim_skim_pdftex_command*
+'g:macvim_skim_pdftex_command'
+                            This is the command used to compile the TeX
+                            document.  By default it is set to >
+
+                            'pdflatex -synctex=1 --interaction=nonstopmode
+                                -output-directory=g:macvim_skim_out_dir
+                                -aux-directory=g:macvim_skim_out_dir %:p'
+
