@@ -10,40 +10,40 @@ if !exists("g:macvim_skim_pdftex_command")
     let g:macvim_skim_pdftex_command='pdflatex -synctex=1 --interaction=nonstopmode -output-directory='.g:macvim_skim_out_dir.' -aux-directory='.g:macvim_skim_out_dir.' %:p'
 endif
 
+function! SkimJumpToLine()
+    silent execute "!".g:macvim_skim_app_path . "/Contents/SharedSupport/displayline -r "
+                \ . line(".") . " %:h/" . g:macvim_skim_out_dir
+                \ . "/%:t:r.pdf %"
+endfunction
+
+function! CompileTex()
+    silent execute "!".g:macvim_skim_pdftex_command
+endfunction
+
 " Activate skim
 nnoremap <buffer> <localleader>v
     \ :w<CR>
-    \ :silent !<C-r>=g:macvim_skim_app_path<CR>/Contents/SharedSupport/displayline
-    \ -r <C-r>=line(".")<CR>
-    \ %:h/<C-r>=g:macvim_skim_out_dir<CR>/%:t:r.pdf %<CR><CR>
+    \ :call SkimJumpToLine() <CR>
 
 nnoremap <buffer> <localleader>p
     \ :w<CR>
-    \ :silent !<C-r>=g:macvim_skim_pdftex_command<CR><CR>
-    \ :silent !<C-r>=g:macvim_skim_app_path<CR>/Contents/SharedSupport/displayline
-    \ -r <C-r>=line(".")<CR>
-    \ %:h/<C-r>=g:macvim_skim_out_dir<CR>/%:t:r.pdf %<CR><CR>
+    \ :call CompileTex() <CR>
+    \ :call SkimJumpToLine() <CR>
 
 nnoremap <buffer> <localleader>m
     \ :w<CR>
     \ !make <CR>
-    \ :silent !<C-r>=g:macvim_skim_app_path<CR>/Contents/SharedSupport/displayline
-    \ -r <C-r>=line(".")<CR>
-    \ %:h/<C-r>=g:macvim_skim_out_dir<CR>/%:t:r.pdf %<CR><CR>
+    \ :call SkimJumpToLine() <CR>
 " " Reactivate Vim
 nnoremap <buffer> <localleader>r
     \ :w<CR>
-    \ :silent !<C-r>=g:macvim_skim_app_path<CR>/Contents/SharedSupport/displayline
-    \ -r <C-r>=line(".")<CR>
-    \ %:h/<C-r>=g:macvim_skim_out_dir<CR>/%:t:r.pdf %<CR>
+    \ :call SkimJumpToLine() <CR>
     \ :silent !osascript -e "tell application \"MacVim\" to activate" <CR>
 
 nnoremap <buffer> <localleader>t
     \ :w<CR>
-    \ :silent !<C-r>=g:macvim_skim_pdftex_command<CR><CR>
-    \ :silent !<C-r>=g:macvim_skim_app_path<CR>/Contents/SharedSupport/displayline
-    \ -r <C-r>=line(".")<CR>
-    \ %:h/<C-r>=g:macvim_skim_out_dir<CR>/%:t:r.pdf %<CR>
+    \ :call CompileTex() <CR>
+    \ :call SkimJumpToLine() <CR>
     \ :silent !osascript -e "tell application \"MacVim\" to activate" <CR>
 
 
