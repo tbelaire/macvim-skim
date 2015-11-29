@@ -46,7 +46,7 @@ All of these mappings save the current buffer first.
 <LocalLeader>p
     This command first compiles the PDF using `pdftex`, then jumps to the
     current line.
-    The precise command is configurable in |g:macvim_skim_app_path|.
+    The precise command is configurable in g:|macvim_skim_app_path|.
 
 <LocalLeader>m
     This command first compiles using `make`, then jumps to the current line.
