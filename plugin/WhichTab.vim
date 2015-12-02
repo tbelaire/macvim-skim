@@ -12,7 +12,7 @@ function! MVS_Focus(filename, line)
   let &switchbuf = oldSwitchBufOpt " restore user's switchbuf option
   exe ":silent! :".a:line
   " see if you like this... could also pass a number of lines down to highlight
-  exe "zz"
+  normal! "zz"
   call REcho(printf("Focused on %s line %d by macvim-skim.", fnamemodify(bufname("%"), ":f"), a:line))
   return 1
 endfunction
